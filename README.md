@@ -52,6 +52,7 @@ Each Plugin version listed below has been tested with its corresponding NetBox v
 
 | NetBox version | Plugin version |
 |:--------------:|:--------------:|
+|      4.4.7     |     0.1        |
 |      3.6       |     0.0.2      |
 |      3.6       |     0.0.1      |
 
@@ -79,11 +80,11 @@ Enable the plugin in `/opt/netbox/netbox/netbox/configuration.py`,
 
 ```python
 PLUGINS = [
-    "netbox_physical-storage"
+    "netbox_physical_storage"
 ]
 
 PLUGINS_CONFIG = {
-    "netbox_physical-storage": {
+    "netbox_physical_storage": {
         "top_level_menu": True # If set to True the plugin will add a top level menu item for the plugin. If set to False the plugin will add a menu item under the Plugins menu item.  Default is set to True.
     },
 }

@@ -7,6 +7,8 @@ class StorageDeviceView(generic.ObjectView):
 class StorageDeviceListView(generic.ObjectListView):
     queryset = models.StorageDevice.objects.all()
     table = tables.StorageDeviceTable
+    filterset = filtersets.StorageDeviceFilterSet
+    filterset_form = forms.StorageDeviceFilterForm
 
 class StorageDeviceEditView(generic.ObjectEditView):
     queryset = models.StorageDevice.objects.all()
@@ -14,9 +16,3 @@ class StorageDeviceEditView(generic.ObjectEditView):
 
 class StorageDeviceDeleteView(generic.ObjectDeleteView):
     queryset = models.StorageDevice.objects.all()
-
-class StorageDeviceListView(generic.ObjectListView):
-    queryset = models.StorageDevice.objects.all()
-    table = tables.StorageDeviceTable
-    filterset = filtersets.StorageDeviceFilterSet
-    filterset_form = forms.StorageDeviceFilterForm
