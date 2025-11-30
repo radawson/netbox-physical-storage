@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='netbox-physical-storage',
-    version='0.1.0',
+    version='0.1.1',
     description='A NetBox plugin for managing physical storage devices',
     author='R. Dawson',
     author_email='dawsonra@clockworx.org',  

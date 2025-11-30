@@ -4,7 +4,7 @@ class NetBoxPhysicalStorageConfig(PluginConfig):
     name = 'netbox_physical_storage'
     verbose_name = ' NetBox Physical Storage'
     description = 'Manage physical storage interfaces and devices in NetBox.'
-    version = '0.1.0'
+    version = '0.1.1'
     author = 'R. Dawson'
     author_email = 'dawsonra@clockworx.org'  
     base_url = 'physical-storage'
