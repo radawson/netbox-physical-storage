@@ -4,7 +4,7 @@ Define the plugin menu buttons & the plugin navigation bar enteries.
 
 from django.conf import settings
 from netbox.plugins.navigation import PluginMenu, PluginMenuButton, PluginMenuItem
-from utilities.choices import ButtonColorChoices
+from netbox.choices import ButtonColorChoices
 
 plugin_settings = settings.PLUGINS_CONFIG.get("netbox_physical_storage", {})
 
