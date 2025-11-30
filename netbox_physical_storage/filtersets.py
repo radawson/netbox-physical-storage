@@ -1,6 +1,6 @@
 from django.db.models import Q
 from netbox.filtersets import NetBoxModelFilterSet
-from netbox.filters import MultiValueCharFilter, MultiValueNumberFilter
+from utilities.filters import MultiValueCharFilter, MultiValueNumberFilter
 from .models import StorageDevice, StorageBay, RAIDGroup, StorageDeviceHistory
 
 class StorageDeviceFilterSet(NetBoxModelFilterSet):
