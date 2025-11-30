@@ -1,0 +1,77 @@
+{% extends 'generic/object.html' %}
+{% block content %}
+<div class="row mb-3">
+  <div class="col col-md-6">
+    <div class="card">
+      <h5 class="card-header">Storage Device History</h5>
+      <div class="card-body">
+        <table class="table table-hover attr-table">
+          <tr>
+            <th scope="row">Storage Device</th>
+            <td>
+              {% if object.storage_device %}
+                <a href="{{ object.storage_device.get_absolute_url }}">{{ object.storage_device }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Status</th>
+            <td>
+              <span class="badge bg-{{ object.get_status_color }}">{{ object.get_status_display }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Replaced By</th>
+            <td>
+              {% if object.replaced_by %}
+                <a href="{{ object.replaced_by.get_absolute_url }}">{{ object.replaced_by }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Replaced At</th>
+            <td>{{ object.replaced_at|placeholder }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Device</th>
+            <td>
+              {% if object.device %}
+                <a href="{{ object.device.get_absolute_url }}">{{ object.device }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Bay</th>
+            <td>
+              {% if object.bay %}
+                <a href="{{ object.bay.get_absolute_url }}">{{ object.bay }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Notes</th>
+            <td>{{ object.notes|placeholder }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Created</th>
+            <td>{{ object.created }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {% include 'inc/panels/custom_fields.html' %}
+  </div>
+  <div class="col col-md-6">
+    {% include 'inc/panels/tags.html' %}
+  </div>
+</div>
+{% endblock content %}
+

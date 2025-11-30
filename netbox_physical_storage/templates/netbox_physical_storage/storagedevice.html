@@ -1,4 +1,5 @@
-{% extends 'generic/object.html' %}{% block content %}
+{% extends 'generic/object.html' %}
+{% block content %}
 <div class="row mb-3">
   <div class="col col-md-6">
     <div class="card">
@@ -10,12 +11,74 @@
             <td>{{ object.name }}</td>
           </tr>
           <tr>
+            <th scope="row">Status</th>
+            <td>
+              <span class="badge bg-{{ object.get_status_color }}">{{ object.get_status_display }}</span>
+            </td>
+          </tr>
+          <tr>
             <th scope="row">Storage Type</th>
-            <td>{{ object.storage_device_type }}</td>
+            <td>
+              <span class="badge bg-{{ object.get_storage_device_type_color }}">{{ object.get_storage_device_type_display }}</span>
+            </td>
           </tr>
           <tr>
             <th scope="row">Serial Number</th>
-            <td>{{ object.serial_number }}</td>
+            <td>
+              {% if object.serial_number %}
+                {{ object.serial_number }}
+              {% else %}
+                <span class="text-muted"><em>Pending</em></span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Model Number</th>
+            <td>{{ object.model_number|placeholder }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Manufacturer</th>
+            <td>{{ object.manufacturer|placeholder }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Capacity</th>
+            <td>
+              {% if object.capacity_gb %}
+                {{ object.capacity_gb }} GB
+              {% else %}
+                <span class="text-muted"><em>Not specified</em></span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Device</th>
+            <td>
+              {% if object.device %}
+                <a href="{{ object.device.get_absolute_url }}">{{ object.device }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Bay</th>
+            <td>
+              {% if object.bay %}
+                <a href="{{ object.bay.get_absolute_url }}">{{ object.bay }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Replaced By</th>
+            <td>
+              {% if object.replaced_by %}
+                <a href="{{ object.replaced_by.get_absolute_url }}">{{ object.replaced_by }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
           </tr>
         </table>
       </div>
@@ -25,6 +88,72 @@
   <div class="col col-md-6">
     {% include 'inc/panels/tags.html' %}
     {% include 'inc/panels/comments.html' %}
+    {% if object.raid_groups.exists %}
+      <div class="card">
+        <h5 class="card-header">RAID Groups</h5>
+        <div class="card-body">
+          <table class="table table-hover attr-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>RAID Level</th>
+                <th>Device</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for raid_group in object.raid_groups.all %}
+                <tr>
+                  <td><a href="{{ raid_group.get_absolute_url }}">{{ raid_group.name }}</a></td>
+                  <td>{{ raid_group.get_raid_level_display }}</td>
+                  <td>
+                    {% if raid_group.device %}
+                      <a href="{{ raid_group.device.get_absolute_url }}">{{ raid_group.device }}</a>
+                    {% else %}
+                      <span class="text-muted">—</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
+    {% if object.get_replacement_history.exists %}
+      <div class="card">
+        <h5 class="card-header">Replacement History</h5>
+        <div class="card-body">
+          <table class="table table-hover attr-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Replaced By</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for history in object.get_replacement_history.all %}
+                <tr>
+                  <td>{{ history.replaced_at|default:history.created }}</td>
+                  <td>
+                    <span class="badge bg-{{ history.get_status_color }}">{{ history.get_status_display }}</span>
+                  </td>
+                  <td>
+                    {% if history.replaced_by %}
+                      <a href="{{ history.replaced_by.get_absolute_url }}">{{ history.replaced_by }}</a>
+                    {% else %}
+                      <span class="text-muted">—</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ history.notes|placeholder }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

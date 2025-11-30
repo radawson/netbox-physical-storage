@@ -1,0 +1,69 @@
+{% extends 'generic/object.html' %}
+{% block content %}
+<div class="row mb-3">
+  <div class="col col-md-6">
+    <div class="card">
+      <h5 class="card-header">Storage Bay</h5>
+      <div class="card-body">
+        <table class="table table-hover attr-table">
+          <tr>
+            <th scope="row">Device</th>
+            <td>
+              {% if object.device %}
+                <a href="{{ object.device.get_absolute_url }}">{{ object.device }}</a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Bay Number</th>
+            <td>{{ object.bay_number }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Name</th>
+            <td>{{ object.name|placeholder }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {% include 'inc/panels/custom_fields.html' %}
+  </div>
+  <div class="col col-md-6">
+    {% include 'inc/panels/tags.html' %}
+    {% include 'inc/panels/comments.html' %}
+    <div class="card">
+      <h5 class="card-header">Storage Devices</h5>
+      <div class="card-body">
+        {% if object.storage_devices.exists %}
+          <table class="table table-hover attr-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Serial Number</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for device in object.storage_devices.all %}
+                <tr>
+                  <td><a href="{{ device.get_absolute_url }}">{{ device.name }}</a></td>
+                  <td>{{ device.get_storage_device_type_display }}</td>
+                  <td>{{ device.serial_number|placeholder }}</td>
+                  <td>
+                    <span class="badge bg-{{ device.get_status_color }}">{{ device.get_status_display }}</span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <span class="text-muted">No storage devices assigned to this bay.</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

@@ -112,6 +112,9 @@ class RAIDGroup(NetBoxModel):
     def get_absolute_url(self):
         return reverse('plugins:netbox_physical_storage:raidgroup', args=[self.pk])
     
+    def get_raid_level_color(self):
+        return RAIDLevelChoices.colors.get(self.raid_level)
+    
     def get_drive_count(self):
         """Get number of drives in the RAID"""
         return self.storage_devices.count()
@@ -206,6 +209,9 @@ class StorageDeviceHistory(NetBoxModel):
     
     def get_absolute_url(self):
         return reverse('plugins:netbox_physical_storage:storagedevicehistory', args=[self.pk])
+    
+    def get_status_color(self):
+        return StorageDeviceStatusChoices.colors.get(self.status)
 
 class StorageDevice(NetBoxModel):
     name = models.CharField(
@@ -283,6 +289,9 @@ class StorageDevice(NetBoxModel):
     
     def get_storage_device_type_color(self):
         return StorageDeviceTypeChoices.colors.get(self.storage_device_type)
+    
+    def get_status_color(self):
+        return StorageDeviceStatusChoices.colors.get(self.status)
     
     def get_replacement_history(self):
         """Get all historical records for this device"""
