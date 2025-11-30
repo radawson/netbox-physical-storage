@@ -6,6 +6,9 @@ from utilities.forms.fields import CommentField, DynamicModelChoiceField, Dynami
 from django import forms
 from netbox.forms import NetBoxModelForm, NetBoxModelFilterSetForm
 
+# Import Device for queryset
+from dcim.models import Device
+
 class StorageDeviceFilterForm(NetBoxModelFilterSetForm):
     model = StorageDevice
 
@@ -24,13 +27,13 @@ class StorageDeviceFilterForm(NetBoxModelFilterSetForm):
         required=False
     )
 
-    device_id = forms.ModelMultipleChoiceField(
-        queryset=StorageDevice.objects.none(),  # Will be filtered by API
+    device_id = DynamicModelMultipleChoiceField(
+        queryset=Device.objects.all(),
         required=False,
         label='Device'
     )
 
-    bay_id = forms.ModelMultipleChoiceField(
+    bay_id = DynamicModelMultipleChoiceField(
         queryset=StorageBay.objects.all(),
         required=False,
         label='Bay'
@@ -42,7 +45,7 @@ class StorageDeviceFilterForm(NetBoxModelFilterSetForm):
 
 class StorageDeviceForm(NetBoxModelForm):
     device = DynamicModelChoiceField(
-        model='dcim.Device',
+        queryset=Device.objects.all(),
         query_params={'kind': 'device'},
         required=False,
         label='Enclosure Device'
@@ -92,8 +95,8 @@ class StorageDeviceForm(NetBoxModelForm):
 class StorageBayFilterForm(NetBoxModelFilterSetForm):
     model = StorageBay
 
-    device_id = forms.ModelMultipleChoiceField(
-        queryset=StorageBay.objects.none(),  # Will be filtered by API
+    device_id = DynamicModelMultipleChoiceField(
+        queryset=Device.objects.all(),
         required=False,
         label='Device'
     )
@@ -104,7 +107,7 @@ class StorageBayFilterForm(NetBoxModelFilterSetForm):
 
 class StorageBayForm(NetBoxModelForm):
     device = DynamicModelChoiceField(
-        model='dcim.Device',
+        queryset=Device.objects.all(),
         query_params={'kind': 'device'},
         required=True,
         label='Enclosure Device'
@@ -127,8 +130,8 @@ class StorageBayForm(NetBoxModelForm):
 class RAIDGroupFilterForm(NetBoxModelFilterSetForm):
     model = RAIDGroup
 
-    device_id = forms.ModelMultipleChoiceField(
-        queryset=RAIDGroup.objects.none(),  # Will be filtered by API
+    device_id = DynamicModelMultipleChoiceField(
+        queryset=Device.objects.all(),
         required=False,
         label='Device'
     )
@@ -148,7 +151,7 @@ class RAIDGroupForm(NetBoxModelForm):
         max_length=100
     )
     device = DynamicModelChoiceField(
-        model='dcim.Device',
+        queryset=Device.objects.all(),
         query_params={'kind': 'device'},
         required=True,
         label='Enclosure Device'
@@ -176,7 +179,7 @@ class RAIDGroupForm(NetBoxModelForm):
 class StorageDeviceHistoryFilterForm(NetBoxModelFilterSetForm):
     model = StorageDeviceHistory
 
-    storage_device_id = forms.ModelMultipleChoiceField(
+    storage_device_id = DynamicModelMultipleChoiceField(
         queryset=StorageDevice.objects.all(),
         required=False,
         label='Storage Device'
@@ -187,8 +190,8 @@ class StorageDeviceHistoryFilterForm(NetBoxModelFilterSetForm):
         required=False
     )
 
-    device_id = forms.ModelMultipleChoiceField(
-        queryset=StorageDeviceHistory.objects.none(),  # Will be filtered by API
+    device_id = DynamicModelMultipleChoiceField(
+        queryset=Device.objects.all(),
         required=False,
         label='Device'
     )
