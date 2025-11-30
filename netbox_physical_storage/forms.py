@@ -42,7 +42,7 @@ class StorageDeviceFilterForm(NetBoxModelFilterSetForm):
 
 class StorageDeviceForm(NetBoxModelForm):
     device = DynamicModelChoiceField(
-        queryset=None,  # NetBox will set this based on query_params
+        model='dcim.Device',
         query_params={'kind': 'device'},
         required=False,
         label='Enclosure Device'
@@ -104,7 +104,7 @@ class StorageBayFilterForm(NetBoxModelFilterSetForm):
 
 class StorageBayForm(NetBoxModelForm):
     device = DynamicModelChoiceField(
-        queryset=None,  # Will be set by NetBox
+        model='dcim.Device',
         query_params={'kind': 'device'},
         required=True,
         label='Enclosure Device'
@@ -148,7 +148,7 @@ class RAIDGroupForm(NetBoxModelForm):
         max_length=100
     )
     device = DynamicModelChoiceField(
-        queryset=None,  # Will be set by NetBox
+        model='dcim.Device',
         query_params={'kind': 'device'},
         required=True,
         label='Enclosure Device'

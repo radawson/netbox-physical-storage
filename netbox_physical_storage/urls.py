@@ -2,7 +2,7 @@ from netbox.views.generic import ObjectChangeLogView
 from django.urls import path
 from . import models, views
 
-urlpatterns = (
+urlpatterns = [
     # StorageDevice URLs
     path('physical-storage/', views.StorageDeviceListView.as_view(), name='storagedevice_list'),
     path('physical-storage/add/', views.StorageDeviceEditView.as_view(), name='storagedevice_add'),
@@ -36,4 +36,4 @@ urlpatterns = (
     path('storage-device-history/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='storagedevicehistory_changelog', kwargs={
         'model': models.StorageDeviceHistory
     }),
-)
+]
